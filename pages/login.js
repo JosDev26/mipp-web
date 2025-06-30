@@ -8,7 +8,7 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <><Body className="login-body" />
+      <><body className="login-body" />
       <div className="login-container">
         <div className="left-panel">
           <div className="sun-icon" />
@@ -37,7 +37,7 @@ export default function Login() {
           </form>
         </div>
       </div>
-      </Body>
+      </>
     </>
   );
 }
