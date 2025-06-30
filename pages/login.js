@@ -12,7 +12,7 @@ export default function Login() {
       <div className="login-container">
         <div className="left-panel">
           <div className="sun-icon" />
-          <h1>“Modulo Inteligente de<br />Permisos de Personal +”</h1>
+          <h1>“Recontrahijueputa<br />Permisos de Personal +”</h1>
           <div className="city-sketch" />
         </div>
 
