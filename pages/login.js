@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import sheet from '@/styles/login.css';
+import sheet from '../../styles/login.css';
 
 export default function Login() {
   return (
@@ -8,7 +8,6 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <><Body className="login-body" />
       <div className="login-container">
         <div className="left-panel">
           <div className="sun-icon" />
@@ -18,7 +17,7 @@ export default function Login() {
 
         <div className="right-panel">
           <div className="logos">
-            <img src="/assets/tpmn-logo.png" alt="CTPMN Logo" />
+            <img src="public/" alt="CTPMN Logo" />
             <img src="/assets/mipp-logo.png" alt="MIPP Logo" />
           </div>
 
@@ -37,7 +36,6 @@ export default function Login() {
           </form>
         </div>
       </div>
-      </Body>
     </>
   );
 }
