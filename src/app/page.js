@@ -1,15 +1,48 @@
+"use client"
 import sheet from "../app/login.css"
+import Image from "next/image";
+import { useState } from "react";
+import { supabase } from "./supabaseClient";
+import ToastContainer from "./ToastProvider";
+import { toast } from "react-toastify";
 
 
-export default function page() {
+export default function Page() {
+  const [loading, setLoading] = useState(false);
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    setLoading(true);
+    const identification = e.target.identification.value;
+    const password = e.target.password.value;
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: identification,
+        password
+      });
+      if (error) {
+        toast.error("Identificación o contraseña incorrecta.");
+      } else {
+        toast.success("¡Inicio de sesión exitoso!");
+        // Redirigir o recargar según la lógica de la app
+        // window.location.href = "/ruta-protegida";
+      }
+    } catch (err) {
+      toast.error("Error de conexión. Intente más tarde.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    
+    <>
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="login-container">
       {/* Sección izquierda - Fondo rojo con ilustraciones */}
       <div className="left-section">
         {/* Sol en la esquina superior izquierda */}
         <div className="sun-container">
-          <img src="/images/Sol.png" alt="Sol" className="sun-image" />
+          <Image src="/images/Sol.png" alt="Sol" className="sun-image" width={160} height={160} quality={100} priority />
         </div>
 
         {/* Título principal */}
@@ -21,7 +54,7 @@ export default function page() {
 
         {/* Ilustración de edificios en la parte inferior */}
         <div className="buildings-container">
-          <img src="/images/edificios.png" alt="edificios" className="edificios-image" />
+          <Image src="/images/edificios.png" alt="edificios" className="edificios-image" width={600} height={160} quality={100} />
         </div>
       </div>
 
@@ -30,10 +63,10 @@ export default function page() {
         {/* Header con logos */}
         <div className="header-logos">
           <div className="logo-tpmn">
-            <img src="/images/logoCTPMN.png" alt="TPMN Logo" className="tpmn-logo" />
+            <Image src="/images/logoCTPMN.png" alt="TPMN Logo" className="tpmn-logo" width={200} height={100} quality={100} />
           </div>
           <div className="logo-mipp">
-            <img src="/images/logoMIPP.png" alt="MIPP+ Logo" className="mipp-logo" />
+            <Image src="/images/logoMIPP.png" alt="MIPP+ Logo" className="mipp-logo" width={200} height={100} quality={100} />
           </div>
         </div>
 
@@ -44,7 +77,7 @@ export default function page() {
               <h2 className="form-title">Inicio de Sesión</h2>
             </div>
 
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleLogin}>
               <div className="input-group">
                 <label htmlFor="identification" className="input-label">
                   Identificación
@@ -56,7 +89,7 @@ export default function page() {
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                   </div>
-                  <input id="identification" type="text" className="form-input" placeholder="" />
+                  <input id="identification" name="identification" type="text" className="form-input" placeholder="" required autoComplete="username" />
                 </div>
               </div>
 
@@ -72,7 +105,7 @@ export default function page() {
                       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
                   </div>
-                  <input id="password" type="password" className="form-input" placeholder="" />
+                  <input id="password" name="password" type="password" className="form-input" placeholder="" required autoComplete="current-password" />
                 </div>
               </div>
 
@@ -82,13 +115,14 @@ export default function page() {
                 </a>
               </div>
 
-              <button type="submit" className="submit-button">
-                Iniciar sesión
+              <button type="submit" className="submit-button" disabled={loading}>
+                {loading ? "Ingresando..." : "Iniciar sesión"}
               </button>
             </form>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 }
