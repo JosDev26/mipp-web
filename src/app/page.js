@@ -1,7 +1,6 @@
 import sheet from "../app/login.css"
 
 
-import Image from "next/image";
 export default function page() {
   return (
     
@@ -10,19 +9,19 @@ export default function page() {
       <div className="left-section">
         {/* Sol en la esquina superior izquierda */}
         <div className="sun-container">
-          <Image src="" alt="Sol" className="sun-image" width={64} height={64} />
+          <img src="/images/Sol.png" alt="Sol" className="sun-image" />
         </div>
 
         {/* Título principal */}
         <div className="title-container">
           <div className="title-content">
-            <h1 className="main-title">Bienvenido a &quot;Modulo Inteligente de Permisos de Personal +&quot;</h1>
+            <h1 className="main-title">"Modulo Inteligente de Permisos de Personal +"</h1>
           </div>
         </div>
 
         {/* Ilustración de edificios en la parte inferior */}
         <div className="buildings-container">
-          <Image src="/images/edificios.svg" alt="edificios" className="buildings-image" width={128} height={128} />
+          <img src="/images/edificios.png" alt="edificios" className="edificios-image" />
         </div>
       </div>
 
@@ -31,10 +30,10 @@ export default function page() {
         {/* Header con logos */}
         <div className="header-logos">
           <div className="logo-tpmn">
-            <Image src="" alt="TPMN Logo" className="tpmn-logo" width={64} height={64} />
+            <img src="/images/logoCTPMN.png" alt="TPMN Logo" className="tpmn-logo" />
           </div>
           <div className="logo-mipp">
-            <Image src="" alt="MIPP+ Logo" className="mipp-logo" width={64} height={64} />
+            <img src="/images/logoMIPP.png" alt="MIPP+ Logo" className="mipp-logo" />
           </div>
         </div>
 
