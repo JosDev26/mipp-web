@@ -1,5 +1,5 @@
-import sheet from "../app/login.css"
 import Link from "next/link";
+
 
 export default function page() {
   return (
@@ -41,13 +41,16 @@ export default function page() {
         <div className="form-container">
           <div className="form-wrapper">
             <div className="form-header">
-              <h2 className="form-title">Inicio de Sesión</h2>
+              <h2 className="form-title">Recuperar contraseña</h2>
             </div>
 
             <form className="login-form">
+              <p className="form-description" style={{marginBottom: '1rem', color: '#6b0f1a', fontWeight: 500}}>
+                Ingresa tu identificación o correo electrónico y te enviaremos instrucciones para restablecer tu contraseña.
+              </p>
               <div className="input-group">
-                <label htmlFor="identification" className="input-label">
-                  Identificación
+                <label htmlFor="user" className="input-label">
+                  Identificación o correo
                 </label>
                 <div className="input-wrapper">
                   <div className="input-icon">
@@ -56,34 +59,19 @@ export default function page() {
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                   </div>
-                  <input id="identification" type="text" className="form-input" placeholder="" />
-                </div>
-              </div>
-
-              <div className="input-group">
-                <label htmlFor="password" className="input-label">
-                  Contraseña
-                </label>
-                <div className="input-wrapper">
-                  <div className="input-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                      <circle cx="12" cy="16" r="1"></circle>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                  </div>
-                  <input id="password" type="password" className="form-input" placeholder="" />
+                  <input id="user" type="text" className="form-input" placeholder="Ej: usuario@correo.com" />
                 </div>
               </div>
 
               <div className="forgot-password">
-                <Link href="/forget" className="forgot-link">
-                  ¿Olvidó su contraseña?
+                <Link href="/" className="forgot-link" style={{color: '#b71c1c', fontSize: '0.95em'}}>
+                  &lt;- Volver al inicio
                 </Link>
               </div>
 
+
               <button type="submit" className="submit-button">
-                Iniciar sesión
+                Enviar instrucciones
               </button>
             </form>
           </div>
