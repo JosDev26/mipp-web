@@ -1,10 +1,5 @@
 "use client"
 import sheet from "../app/login.css"
-import Image from "next/image";
-import { useState } from "react";
-import { supabase } from "./supabaseClient";
-import ToastContainer from "./ToastProvider";
-import { toast } from "react-toastify";
 
 
 export default function Page() {
@@ -110,9 +105,9 @@ export default function Page() {
               </div>
 
               <div className="forgot-password">
-                <a href="#" className="forgot-link">
+                <Link href="/forget" className="forgot-link">
                   ¿Olvidó su contraseña?
-                </a>
+                </Link>
               </div>
 
               <button type="submit" className="submit-button" disabled={loading}>
