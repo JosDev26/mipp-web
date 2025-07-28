@@ -44,7 +44,7 @@ body {
 }
 
 .sun-image {
-  width: 30vw;
+  width: 20vw;
   max-width: 400px;
   min-width: 120px;
   height: auto;
@@ -62,7 +62,7 @@ body {
 
 .title-content {
   text-align: center;
-  max-width: 28rem;
+  max-width: 40rem;
 }
 
 .main-title {
@@ -78,7 +78,7 @@ body {
 /* Edificios */
 .buildings-container {
   position: relative;
-  height: 25rem;
+  height: 20rem;
   display: flex;
   align-items: flex-end;
 }
@@ -92,7 +92,7 @@ body {
 
 /* Sección derecha */
 .right-section {
-  flex: 1;
+  flex: 0.7;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -130,9 +130,9 @@ body {
 .form-container {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 2rem;
+  padding: 4rem;
   margin-top: 0;
 }
 
