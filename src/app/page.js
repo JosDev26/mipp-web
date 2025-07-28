@@ -85,6 +85,11 @@ export default function page() {
               <button type="submit" className="submit-button">
                 Iniciar sesión
               </button>
+              <div style={{ marginTop: "1rem", textAlign: "center" }}>
+                <a href="/permissionform" style={{ color: "#791524", textDecoration: "underline" }}>
+                  Ir al formulario de permisos (prueba)
+                </a>
+              </div>
             </form>
           </div>
         </div>
