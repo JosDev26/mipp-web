@@ -9,7 +9,7 @@ export default function page() {
       <div className="left-section">
         {/* Sol en la esquina superior izquierda */}
         <div className="sun-container">
-          <img src="" alt="Sol" className="sun-image" />
+          <img src="/images/Sol.png" alt="Sol" className="sun-image" />
         </div>
 
         {/* Título principal */}
@@ -21,7 +21,7 @@ export default function page() {
 
         {/* Ilustración de edificios en la parte inferior */}
         <div className="buildings-container">
-          <img src="/images/edificios.svg" alt="edificios" className="buildings-image" />
+          <img src="/images/edificios.png" alt="edificios" className="edificios-image" />
         </div>
       </div>
 
@@ -30,10 +30,10 @@ export default function page() {
         {/* Header con logos */}
         <div className="header-logos">
           <div className="logo-tpmn">
-            <img src="" alt="TPMN Logo" className="tpmn-logo" />
+            <img src="/images/logoCTPMN.png" alt="TPMN Logo" className="tpmn-logo" />
           </div>
           <div className="logo-mipp">
-            <img src="" alt="MIPP+ Logo" className="mipp-logo" />
+            <img src="/images/logoMIPP.png" alt="MIPP+ Logo" className="mipp-logo" />
           </div>
         </div>
 
