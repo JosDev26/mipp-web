@@ -1,4 +1,11 @@
 "use client"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify"; // Import toast
+import 'react-toastify/dist/ReactToastify.css';
+// import bcrypt from "bcryptjs";
+// import { supabase } from "./supabaseClient";
 import sheet from "../app/login.css"
 
 
@@ -11,19 +18,28 @@ export default function Page() {
     const identification = e.target.identification.value;
     const password = e.target.password.value;
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: identification,
-        password
+      // Validación básica
+      if (!identification.trim() || !password) {
+        toast.error("Por favor, ingrese identificación y contraseña.");
+        setLoading(false);
+        return;
+      }
+      // Llamar a la API de login
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identification, password }),
       });
-      if (error) {
-        toast.error("Identificación o contraseña incorrecta.");
-      } else {
+      const result = await res.json();
+      if (result.success) {
         toast.success("¡Inicio de sesión exitoso!");
-        // Redirigir o recargar según la lógica de la app
+        // Aquí puedes redirigir si lo deseas
         // window.location.href = "/ruta-protegida";
+      } else {
+        toast.error(result.error || "Identificación o contraseña incorrecta.");
       }
     } catch (err) {
-      toast.error("Error de conexión. Intente más tarde.");
+      toast.error("Error inesperado: " + err.message);
     } finally {
       setLoading(false);
     }
