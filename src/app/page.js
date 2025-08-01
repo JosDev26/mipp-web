@@ -33,8 +33,13 @@ export default function Page() {
       const result = await res.json();
       if (result.success) {
         toast.success("¡Inicio de sesión exitoso!");
-        // Aquí puedes redirigir si lo deseas
-        // window.location.href = "/ruta-protegida";
+        // Guardar estado de login, nombre y apellido, y redirigir a /home
+        if (typeof window !== "undefined") {
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userName", result.user?.user_fname || "");
+          localStorage.setItem("userLastName", result.user?.user_flname || "");
+          window.location.href = "/home";
+        }
       } else {
         toast.error(result.error || "Identificación o contraseña incorrecta.");
       }

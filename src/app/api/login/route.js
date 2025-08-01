@@ -25,13 +25,14 @@ export async function POST(req) {
     }
 
     const user = users[0];
+    console.log("[LOGIN API] Usuario extraído:", user);
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return NextResponse.json({ error: "Identificación o contraseña incorrecta" }, { status: 401 });
     }
 
-    // Opcional: puedes devolver datos del usuario (sin la contraseña)
-    return NextResponse.json({ success: true, user: { user_id: user.user_id, user_fname: user.user_fname } });
+    // Devolver nombre y apellido del usuario (sin la contraseña)
+    return NextResponse.json({ success: true, user: { user_id: user.user_id, user_fname: user.user_fname, user_flname: user.user_flname } });
   } catch (err) {
     return NextResponse.json({ error: "Error inesperado" }, { status: 500 });
   }
