@@ -2,7 +2,7 @@ import Header from "../../components/Header"
 import Welcome from "../../components/Welcome"
 import FuncionarioAC from "../../components/FuncionarioAC"
 import Historial from "../../components/Historial"
-import "../../styles/admin.css"
+
 
     export default function funcionario() {
     return (

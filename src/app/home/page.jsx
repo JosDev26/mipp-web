@@ -1,10 +1,9 @@
+import Header from "../../../components/components/Header"
+import Welcome from "../../../components/components/Welcome"
+import ActionCards from "../../../components/components/ActionCards"
+import "../../../styles/admin.css"
 
-import Header from "../components/Header"
-import WelcomeSection from "../components/Welcome"
-import ActionCards from "../components/ActionCards"
-
-
-export default function HomePage() {
+    export default function HomePage() {
     return (
         <div className="app-container">
         <div className="geometric-background">
@@ -14,16 +13,11 @@ export default function HomePage() {
         <div className="content-wrapper">
             <Header />
             <main className="main-content">
-            <WelcomeSection />
+            <Welcome />
             <ActionCards />
             </main>
         </div>
         </div>
-=======
-
-    export default function Login() {
-    return (
-       <h1>Hola mundo</h1>
->>>>>>> 06d43291f0809b8dbafac571bdca957b5c946510
     )
     }
+
