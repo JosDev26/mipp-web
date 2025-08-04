@@ -4,7 +4,7 @@ import FuncionarioAC from "../../components/FuncionarioAC"
 import Historial from "../../components/Historial"
 import "../../styles/admin.css"
 
-    export default function HomePage() {
+    export default function funcionario() {
     return (
         <div className="app-container">
         <div className="geometric-background funcionario">

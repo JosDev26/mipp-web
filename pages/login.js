@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import sheet from '../../styles/login.css';
+import sheet from './styles/login.css';
 
 export default function Login() {
   return (

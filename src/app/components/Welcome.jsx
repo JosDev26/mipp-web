@@ -1,4 +1,4 @@
-import "../../styles/admin.css"
+import "./styles/admin.css"
 
     export default function WelcomeSection() {
     return (

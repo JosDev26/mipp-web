@@ -1,38 +1,38 @@
-import "../../styles/admin.css"
+import "./styles/admin.css"
 
-    export default function ActionCards() {
+    export default function FuncionarioActionCards() {
     const cards = [
         {
         id: 1,
         icon: "📄",
-        title: "Ver Permisos de Salida,",
+        title: "Solicitar Permiso de Salida,",
         subtitle: "Ausencia, Tardía o Incapacidad",
         },
         {
         id: 2,
         icon: "⚙️",
-        title: "Ver Justificaciones.",
-        subtitle: "",
+        title: "Justificar Ausencia, Salida,",
+        subtitle: "Tardía o Incapacidad.",
         },
         {
         id: 3,
-        icon: "🏢",
-        title: "Gestionar Reportes de",
-        subtitle: "Problemas y Daños.",
+        icon: "📋",
+        title: "Justificar Omisión de marca.",
+        subtitle: "",
         },
         {
         id: 4,
-        icon: "👥",
-        title: "Administración de Personal",
+        icon: "🏢",
+        title: "Reportar Problema o Daño.",
         subtitle: "",
         },
     ]
 
     return (
-        <section className="action-cards">
+        <section className="funcionario-action-cards">
         <div className="cards-grid">
             {cards.map((card) => (
-            <div key={card.id} className="action-card">
+            <div key={card.id} className="funcionario-action-card">
                 <div className="card-icon">{card.icon}</div>
                 <div className="card-content">
                 <h3 className="card-title">{card.title}</h3>
@@ -44,3 +44,4 @@ import "../../styles/admin.css"
         </section>
     )
     }
+
