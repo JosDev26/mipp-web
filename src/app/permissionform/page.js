@@ -15,7 +15,7 @@ export default function PermissionForm() {
         Formulario de Solicitud de Permiso de Salida, Ausencia, Tardía o Incapacidades
         </h1>
         <p className="form-important">
-        <strong>Importante:</strong> Todo permiso de ausencia laboral está sujeto a cumplimiento de requisitos y copia adjunta de documento pertinente de cita, convocatoria o licencia, de ser posible con tres días de anticipación. Posterior a la ausencia y/o tardía, el funcionario debe de hacer entrega del comprobante pertinente de justificación de asistencia en el plazo no mayor de 48 (cuarenta y ocho) horas. Las licencias dependen de requisitos previos para su goce. De no presentar el comprobante se tramitará lo que corresponda.
+        <span>Importante:</span> Todo permiso de ausencia laboral está sujeto a cumplimiento de requisitos y copia adjunta de documento pertinente de cita, convocatoria o licencia, de ser posible con tres días de anticipación. Posterior a la ausencia y/o tardía, el funcionario debe de hacer entrega del comprobante pertinente de justificación de asistencia en el plazo no mayor de 48 (cuarenta y ocho) horas. Las licencias dependen de requisitos previos para su goce. De no presentar el comprobante se tramitará lo que corresponda.
         </p>
         <form className="permission-form">
         <div className="form-row">
@@ -38,7 +38,7 @@ export default function PermissionForm() {
             </select>
             </label>
         </div>
-        <div className="form-row">
+        <div className="form-row" id="date-time-section">
             <label>
             Fecha
             <input type="date" />
@@ -68,44 +68,48 @@ export default function PermissionForm() {
             <input type="time" />
             </label>
         </div>
-        <fieldset className="form-row">
-            <legend>Motivo</legend>
-            <div className="radio-group">
+        <div className="form-section">
+            <fieldset className="form-row">
+                <legend>Motivo</legend>
+                <div className="radio-group">
+                    <label>
+                    <input type="radio" name="motivo" /> Cita médica personal
+                    </label>
+                    <label>
+                    <input type="radio" name="motivo" /> Acompañar a cita médica a padre, madre, hijos menores de edad o discapacitados, esposo o cónyuge.
+                    </label>
+                    <label>
+                    <input type="radio" name="motivo" /> Asistencia a Convocatoria:
+                    <select>
+                        <option>Sindical</option>
+                        <option>Otra</option>
+                    </select>
+                    </label>
+                    <label>
+                    <input type="radio" name="motivo" /> Atención de asuntos personales:
+                    <input type="text" placeholder="Especifique" />
+                    </label>
+                </div>
+            </fieldset>
+            <div className="form-row">
                 <label>
-                <input type="radio" name="motivo" /> Cita médica personal
-                </label>
-                <label>
-                <input type="radio" name="motivo" /> Acompañar a cita médica a padre, madre, hijos menores de edad o discapacitados, esposo o cónyuge.
-                </label>
-                <label>
-                <input type="radio" name="motivo" /> Asistencia a Convocatoria:
-                <select>
-                    <option>Sindical</option>
-                    <option>Otra</option>
-                </select>
-                </label>
-                <label>
-                <input type="radio" name="motivo" /> Atención de asuntos personales:
-                <input type="text" placeholder="Especifique" />
+                Observaciones:
+                <textarea rows="5" />
                 </label>
             </div>
-        </fieldset>
-        <div className="form-row">
-            <label>
-            Observaciones:
-            <textarea rows="5" />
-            </label>
         </div>
-        <div className="form-row">
-            <span>
-            Presento la solicitud a las <input type="text" value="3:38" readOnly /> del mes
-            <input type="text" value="Abril" readOnly /> del año 2025 en Heredia, Mercedes Norte.
-            </span>
-        </div>
-        <div className="form-row" style={{ textAlign: "right" }}>
-            <button type="submit" className="submit-button">
-            Enviar solicitud
-            </button>
+        <div className="form-section">
+            <div className="form-row">
+                <span>
+                Presento la solicitud a las <input type="text" value="3:38" readOnly /> del mes
+                <input type="text" value="Abril" readOnly /> del año 2025 en Heredia, Mercedes Norte.
+                </span>
+            </div>
+            <div className="form-row" style={{ textAlign: "right" }}>
+                <button type="submit" className="submit-button">
+                Enviar solicitud
+                </button>
+            </div>
         </div>
         </form>
     </div>

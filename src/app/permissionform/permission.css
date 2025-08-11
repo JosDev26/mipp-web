@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
+}
+
 .permission-form-container {
     max-width: 95%;
     margin: 2rem auto;
@@ -5,7 +17,6 @@
     background: #fff;
     border-radius: 1rem;
     box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-    font-family: 'Nunito Sans', sans-serif;
 }
 
 .permission-header {
@@ -52,10 +63,13 @@
 .form-important {
     font-size: 1rem;
     margin-bottom: 1.5rem;
-    color: #333;
-    background: #f8f6f7;
-    border-left: 4px solid #791524;
-    padding: 1rem;
+    color: #707070;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #791524;
+}
+.form-important span {
+    font-weight: 700;
+    color: #000;
 }
 
 .permission-form {
@@ -77,6 +91,13 @@
     min-width: 10px;
     font-size: 1rem;
 }
+#date-time-section {
+    display: flex;
+    align-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    color: #5C5C5C;
+}
 
 input[type="text"], select {
     width: 15%;
@@ -87,6 +108,7 @@ input[type="text"], select {
     margin-top: 0.3rem;
     box-sizing: border-box;
     background: #faf9fa;
+    color: #8b8b8b;
 }
 textarea {
     width: 30%;
@@ -109,11 +131,21 @@ input[type="time"]{
     margin-top: 0.3rem;
     box-sizing: border-box;
     background: #faf9fa;
+    color: #8B8B8B;
+}
+
+.form-section {
+    display: flex;
+    width: 100%;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 textarea {
     min-height: 80px;
     resize: vertical;
+    width: 100%;
 }
 
 fieldset {
