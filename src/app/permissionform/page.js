@@ -1,9 +1,9 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import sheet from "../permissionform/permission.css";
-import { supabase } from "../supabaseClient"; // Ajuste de ruta para resolver el módulo correctamente
 import Image from "next/image";
 import { ChevronLeft } from "lucide-react";
+import { supabase } from "../supabaseClient";
+import "./permission.css";
 
 export default function PermissionForm() {
     const [userData, setUserData] = useState({
@@ -12,14 +12,21 @@ export default function PermissionForm() {
         position: "",
     });
 
-    const [now, setNow] = useState(new Date());
+    const [formData, setFormData] = useState({
+        permitType: "Ausencia",
+        date: "",
+        timeFrom: "",
+        timeTo: "",
+        journeyType: "Jornada Laboral Completa",
+        lessons: "",
+        hours: "",
+        exitTime: "",
+        reason: "medical", // Valor inicial por defecto
+        convocatoryType: "Sindical",
+        personalMatter: "",
+        observations: ""
+    });
 
-    useEffect(() => {
-        const timer = setInterval(() => setNow(new Date()), 1000);
-        return () => clearInterval(timer);
-    }, []);
-
-    // Fecha/hora en vivo para Costa Rica
     const getNowCR = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Costa_Rica' }));
     const [nowCR, setNowCR] = useState(getNowCR());
 
@@ -28,33 +35,15 @@ export default function PermissionForm() {
         return () => clearInterval(timer);
     }, []);
 
-    // Helpers para inputs HTML y textos (mes en español con mayúscula inicial)
-    const toDateInput = (d) => {
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    };
-    const toTimeInput = (d) => {
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    };
-    const toTimeInputSeconds = (d) => {
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-    };
-    const monthName = (d) => {
-        const s = new Intl.DateTimeFormat('es-CR', { month: 'long', timeZone: 'America/Costa_Rica' }).format(d);
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    };
-
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const userIdStr = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
-                const userId = userIdStr ? Number(userIdStr) : null;
-                if (!userId) {
-                    console.error("No hay userId en localStorage; no se puede cargar el usuario actual.");
+                if (!userIdStr) {
+                    console.error("No hay userId en localStorage.");
                     return;
                 }
+                const userId = Number(userIdStr);
 
                 const { data, error } = await supabase
                     .from("users")
@@ -68,7 +57,6 @@ export default function PermissionForm() {
                     const fullName = [data.user_fname, data.user_sname, data.user_flname, data.user_slname]
                         .filter(Boolean)
                         .join(" ");
-
                     setUserData({
                         name: fullName,
                         id: data.user_id || "",
@@ -79,130 +67,171 @@ export default function PermissionForm() {
                 console.error("Error fetching user data:", err.message || err);
             }
         };
-
         fetchUserData();
     }, []);
 
-    // Estados editables para fecha y horas (inicializan en blanco)
-    const [dateInput, setDateInput] = useState("");
-    const [timeFrom, setTimeFrom] = useState("");
-    const [timeTo, setTimeTo] = useState("");
-    const [timeExit, setTimeExit] = useState("");
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
+
+    const toTimeInput = (d) => {
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    };
+
+    const monthName = (d) => {
+        const s = new Intl.DateTimeFormat('es-CR', { month: 'long', timeZone: 'America/Costa_Rica' }).format(d);
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    };
+
+    const handleBack = () => {
+        if (typeof window !== "undefined") {
+            window.history.back();
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Formulario enviado:", formData);
+        alert("Solicitud enviada con éxito.");
+    };
 
     return (
-    <div className="permission-form-container">
-        <header className="permission-header">
-        <button className="back-button" onClick={() => history.back()}><ChevronLeft size={18}/> Volver</button>
-        <div className="logos">
-            <Image src="/logo-mipp.png" alt="MIPP+" className="logo-mipp" width={120} height={40} />
-            <Image src="/logo-mep.png" alt="MEP" className="logo-mep" width={160} height={40} />
-        </div>
-        </header>
-        <h1 className="form-title">
-        Formulario de Solicitud de Permiso de Salida, Ausencia, Tardía o Incapacidades
-        </h1>
-        <p className="form-important">
-        <span>Importante:</span> Todo permiso de ausencia laboral está sujeto a cumplimiento de requisitos y copia adjunta de documento pertinente de cita, convocatoria o licencia, de ser posible con tres días de anticipación. Posterior a la ausencia y/o tardía, el funcionario debe de hacer entrega del comprobante pertinente de justificación de asistencia en el plazo no mayor de 48 (cuarenta y ocho) horas. Las licencias dependen de requisitos previos para su goce. De no presentar el comprobante se tramitará lo que corresponda.
-        </p>
-        <form className="permission-form">
-        <div className="form-row">
-            <span>
-            Quien se suscribe <input type="text" value={userData.name} readOnly />
-            con cédula de identidad <input type="text" value={userData.id} readOnly />
-            quien labora en la institución educativa <input type="text" value="CTP Mercedes Norte" readOnly />
-            en condición de <input type="text" value={userData.position} readOnly />
-            solicita:
-            </span>
-        </div>
-        <div className="form-row">
-            <label className="permiso-label">
-            Permiso de:
-            <select className="permiso-select">
-                <option>Ausencia</option>
-                <option>Salida</option>
-                <option>Tardía</option>
-                <option>Incapacidad</option>
-            </select>
-            </label>
-        </div>
-        <div className="form-row" id="date-time-section">
-            <label>
-            Fecha
-            <input type="date" value={dateInput} onChange={(e)=>setDateInput(e.target.value)} />
-            </label>
-            <label>
-            Hora
-            <div className="time-range">
-                <span className="time-label">Desde las</span>
-                <input type="time" step="1" value={timeFrom} onChange={(e)=>setTimeFrom(e.target.value)} />
-                <span className="time-label">Hasta las</span>
-                <input type="time" step="1" value={timeTo} onChange={(e)=>setTimeTo(e.target.value)} />
-            </div>
-            </label>
-            <label>
-            Tipo de jornada
-            <select>
-                <option>Jornada Laboral Completa</option>
-                <option>Media Jornada</option>
-            </select>
-            </label>
-            <label>
-            Cantidad de lecciones
-            <input type="number" min="0" />
-            </label>
-            <label>
-            Cantidad de horas
-            <input type="number" min="0" />
-            </label>
-            <label>
-            Hora de salida del centro educativo
-            <input type="time" step="1" value={timeExit} onChange={(e)=>setTimeExit(e.target.value)} />
-            </label>
-        </div>
-        <div className="form-section">
-            <fieldset className="form-row">
-                <legend>Motivo</legend>
-                <div className="radio-group">
-                    <label>
-                    <input type="radio" name="motivo" /> Cita médica personal
-                    </label>
-                    <label>
-                    <input type="radio" name="motivo" /> Acompañar a cita médica a padre, madre, hijos menores de edad o discapacitados, esposo o cónyuge.
-                    </label>
-                    <label>
-                    <input type="radio" name="motivo" /> Asistencia a Convocatoria:
-                    <select>
-                        <option>Sindical</option>
-                        <option>Otra</option>
-                    </select>
-                    </label>
-                    <label>
-                    <input type="radio" name="motivo" /> Atención de asuntos personales:
-                    <input type="text" placeholder="Especifique" />
-                    </label>
-                </div>
-            </fieldset>
-            <div className="form-row">
-                <label>
-                Observaciones:
-                <textarea rows="5" />
-                </label>
-            </div>
-        </div>
-        <div className="form-section">
-            <div className="form-row">
-                <span>
-                Presento la solicitud a las <input type="text" value={toTimeInputSeconds(nowCR)} readOnly /> del mes
-                <input type="text" value={monthName(nowCR)} readOnly /> del año {nowCR.getFullYear()} en Heredia, Mercedes Norte.
-                </span>
-            </div>
-            <div className="form-row" style={{ textAlign: "right" }}>
-                <button type="submit" className="submit-button">
-                Enviar solicitud
+        <div className="permission-form-container">
+            <header className="permission-header">
+                <button className="back-button" onClick={handleBack}>
+                    <ChevronLeft size={18} /> Volver
                 </button>
-            </div>
+                <div className="logos">
+                    <Image src="/images/logoMIPP.png" alt="MIPP+" width={120} height={40} />
+                    <div className="government-logos">
+                        <Image src="/images/logoMEP.png" alt="Ministerio de Educación Pública" width={150} height={40} />
+                        <Image src="/images/logoCR.png" alt="Gobierno de Costa Rica" width={130} height={40} />
+                        <Image src="/images/logoCTPMN.png" alt="CTP Mercedes Norte" width={60} height={60} />
+                    </div>
+                </div>
+            </header>
+
+            <h1 className="form-title">
+                Formulario de Solicitud de Permiso de Salida, Ausencia, Tardía o Incapacidades
+            </h1>
+
+            <p className="form-important">
+                <strong>Importante:</strong> Todo permiso de ausencia laboral está sujeto a cumplimiento de requisitos y copia adjunta de documento pertinente de cita, convocatoria o licencia, de ser posible con tres días de anticipación. Posterior a la ausencia y/o tardía, el funcionario debe de hacer entrega del comprobante pertinente de justificación de asistencia en el plazo no mayor de 48 (cuarenta y ocho) horas. Las licencias dependen de requisitos previos para su goce. De no presentar el comprobante se tramitará lo que corresponda.
+            </p>
+
+            <form className="permission-form" onSubmit={handleSubmit}>
+                <div className="user-info-section">
+                    Quien se suscribe <span className="user-data-pill">{userData.name}</span>,
+                    con cédula de identidad <span className="user-data-pill">{userData.id}</span>,
+                    quien labora en la institución educativa <span className="user-data-pill">CTP Mercedes Norte</span>,
+                    en el puesto de <span className="user-data-pill">{userData.position}</span>, solicita:
+                </div>
+
+                <div className="permit-type-section">
+                    <label className="permit-label">Permiso de:</label>
+                    <select
+                        className="permit-select"
+                        value={formData.permitType}
+                        onChange={(e) => handleInputChange('permitType', e.target.value)}
+                    >
+                        <option>Ausencia</option>
+                        <option>Salida</option>
+                        <option>Tardía</option>
+                        <option>Incapacidad</option>
+                    </select>
+                </div>
+
+                <div className="details-grid">
+                    <div className="field-group">
+                        <label>Fecha</label>
+                        <input type="date" value={formData.date} onChange={(e) => handleInputChange('date', e.target.value)} />
+                    </div>
+                    <div className="field-group time-field-group">
+                        <label>Hora</label>
+                        <div className="time-range">
+                            <span>Desde las</span>
+                            <input type="time" value={formData.timeFrom} onChange={(e) => handleInputChange('timeFrom', e.target.value)} />
+                            <span>Hasta las</span>
+                            <input type="time" value={formData.timeTo} onChange={(e) => handleInputChange('timeTo', e.target.value)} />
+                        </div>
+                    </div>
+                    <div className="field-group">
+                        <label>Tipo de jornada</label>
+                        <select value={formData.journeyType} onChange={(e) => handleInputChange('journeyType', e.target.value)}>
+                            <option>Jornada Laboral Completa</option>
+                            <option>Media Jornada</option>
+                        </select>
+                    </div>
+                    <div className="field-group">
+                        <label>Cantidad de lecciones</label>
+                        <input type="number" min="0" value={formData.lessons} onChange={(e) => handleInputChange('lessons', e.target.value)} />
+                    </div>
+                    <div className="field-group">
+                        <label>Cantidad de horas</label>
+                        <input type="number" min="0" value={formData.hours} onChange={(e) => handleInputChange('hours', e.target.value)} />
+                    </div>
+                    <div className="field-group">
+                        <label>Hora de salida del centro educativo</label>
+                        <input type="time" value={formData.exitTime} onChange={(e) => handleInputChange('exitTime', e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="reason-observations-grid">
+                    <fieldset className="reason-fieldset">
+                        <legend>Motivo</legend>
+                        <div className="radio-option">
+                            <input type="radio" name="reason" value="medical" checked={formData.reason === 'medical'} onChange={(e) => handleInputChange('reason', e.target.value)} />
+                            <label>Cita médica personal</label>
+                        </div>
+                        <div className="radio-option">
+                            <input type="radio" name="reason" value="family_medical" checked={formData.reason === 'family_medical'} onChange={(e) => handleInputChange('reason', e.target.value)} />
+                            <label>Acompañar a cita médica a padre, madre, hijos menores de edad o discapacitados, esposo o cónyuge.</label>
+                        </div>
+                        <div className="radio-option">
+                            <input type="radio" name="reason" value="convocatory" checked={formData.reason === 'convocatory'} onChange={(e) => handleInputChange('reason', e.target.value)} />
+                            <label>Asistencia a Convocatoria:</label>
+                            <select
+                                value={formData.convocatoryType}
+                                onChange={(e) => handleInputChange('convocatoryType', e.target.value)}
+                                disabled={formData.reason !== 'convocatory'}
+                            >
+                                <option>Sindical</option>
+                                <option>Otra</option>
+                            </select>
+                        </div>
+                        <div className="radio-option">
+                            <input type="radio" name="reason" value="personal" checked={formData.reason === 'personal'} onChange={(e) => handleInputChange('reason', e.target.value)} />
+                            <label>Atención de asuntos personales:</label>
+                            <input
+                                type="text"
+                                placeholder="Especifique"
+                                value={formData.personalMatter}
+                                onChange={(e) => handleInputChange('personalMatter', e.target.value)}
+                                disabled={formData.reason !== 'personal'}
+                            />
+                        </div>
+                    </fieldset>
+                    <div className="observations-group">
+                        <label>Observaciones:</label>
+                        <textarea
+                            rows="8"
+                            value={formData.observations}
+                            onChange={(e) => handleInputChange('observations', e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="submission-section">
+                    <span>
+                        Presento la solicitud a las <span className="time-pill">{toTimeInput(nowCR)}</span> del mes
+                        <span className="time-pill">{monthName(nowCR)}</span> del año {nowCR.getFullYear()} en Heredia, Mercedes Norte.
+                    </span>
+                    <button type="submit" className="submit-button">
+                        Enviar solicitud
+                    </button>
+                </div>
+            </form>
         </div>
-        </form>
-    </div>
     );
 }
