@@ -1,4 +1,4 @@
-import "../../styles/admin.css"
+import "@/styles/admin.css";
 
 export default function ActionCards() {
     const cards = [
@@ -44,3 +44,5 @@ export default function ActionCards() {
         </section>
     )
 }
+
+

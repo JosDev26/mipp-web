@@ -1,7 +1,7 @@
-import Header from "../../../components/components/Header"
-import Welcome from "../../../components/components/Welcome"
-import ActionCards from "../../../components/components/ActionCards"
-import "../../../styles/admin.css"
+import Header from "../../components/Header"
+import Welcome from "../../Welcome"
+import ActionCards from "../../components/ActionCards"
+import "../../../styles/admin.css";
 
     export default function HomePage() {
     return (

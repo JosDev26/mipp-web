@@ -1,7 +1,7 @@
 
-import Header from "../components/Header"
-import WelcomeSection from "../components/Welcome"
-import ActionCards from "../components/ActionCards"
+import Header from "./components/Header"
+import WelcomeSection from "./components/Welcome"
+import ActionCards from "./components/ActionCards"
 
 
 export default function HomePage() {
@@ -19,11 +19,5 @@ export default function HomePage() {
             </main>
         </div>
         </div>
-=======
-
-    export default function Login() {
-    return (
-       <h1>Hola mundo</h1>
->>>>>>> 06d43291f0809b8dbafac571bdca957b5c946510
     )
     }
