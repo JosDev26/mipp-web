@@ -20,13 +20,14 @@ export default function ActionCardsFuncionario() {
       icon: "📄❌",
       title: <i>Justificar Omisión de marca.</i>,
       subtitle: "",
-      href: "/funcionario/omision-marca"
+      href: "/omisionmarca"
     },
     {
       id: 4,
       icon: "🏢❗",
       title: "Reportar Problema o Daño.",
       subtitle: "",
+      href: "/reporteproblema"
     },
   ];
 
