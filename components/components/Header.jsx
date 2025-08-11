@@ -3,9 +3,10 @@ import "../../styles/admin.css"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Header({ activePage = "administrador" }) {
+export default function Header({ activePage: initialPage = "administrador" }) {
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
+  const [activePage, setActivePage] = useState(initialPage);
 
   const handleLogout = () => {
     setLoggingOut(true);
@@ -14,7 +15,16 @@ export default function Header({ activePage = "administrador" }) {
         localStorage.removeItem("isLoggedIn");
         router.replace("/");
       }
-    }, 1500); // Simula un pequeño tiempo de cierre
+    }, 1500);
+  };
+
+  const handleRoleChange = (role) => {
+    setActivePage(role);
+    if (role === "administrador") {
+      router.push("/admin"); // Cambia esta ruta si tu dashboard de admin es diferente
+    } else {
+      router.push("/funcionario"); // Cambia esta ruta por la de funcionario real
+    }
   };
 
   if (loggingOut) {
@@ -73,8 +83,20 @@ export default function Header({ activePage = "administrador" }) {
       </div>
       <div className="user-controls">
         <div className="role-toggles">
-          <button className={`role-btn ${activePage === "administrador" ? "active" : ""}`}>Administrador</button>
-          <button className={`role-btn ${activePage === "funcionario" ? "active" : ""}`}>Funcionario</button>
+          <button
+            className={`role-btn ${activePage === "administrador" ? "active" : ""}`}
+            style={activePage === "administrador" ? { background: "#1a237e", color: "#fff", border: "2px solid #1a237e" } : {}}
+            onClick={() => handleRoleChange("administrador")}
+          >
+            Administrador
+          </button>
+          <button
+            className={`role-btn ${activePage === "funcionario" ? "active" : ""}`}
+            style={activePage === "funcionario" ? { background: "#b71c1c", color: "#fff", border: "2px solid #b71c1c" } : {}}
+            onClick={() => handleRoleChange("funcionario")}
+          >
+            Funcionario
+          </button>
         </div>
         <button className="logout-btn" onClick={handleLogout}>
           <span className="logout-icon">👤</span>
