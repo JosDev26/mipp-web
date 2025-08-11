@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify"; // Import toast
@@ -11,6 +11,15 @@ import sheet from "../app/login.css"
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn === "true") {
+        window.location.href = "/home";
+      }
+    }
+  }, []);
 
   async function handleLogin(e) {
     e.preventDefault();

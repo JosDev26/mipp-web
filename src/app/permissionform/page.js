@@ -83,6 +83,12 @@ export default function PermissionForm() {
         fetchUserData();
     }, []);
 
+    // Estados editables para fecha y horas (inicializan en blanco)
+    const [dateInput, setDateInput] = useState("");
+    const [timeFrom, setTimeFrom] = useState("");
+    const [timeTo, setTimeTo] = useState("");
+    const [timeExit, setTimeExit] = useState("");
+
     return (
     <div className="permission-form-container">
         <header className="permission-header">
@@ -122,15 +128,15 @@ export default function PermissionForm() {
         <div className="form-row" id="date-time-section">
             <label>
             Fecha
-            <input type="date" value={toDateInput(nowCR)} readOnly />
+            <input type="date" value={dateInput} onChange={(e)=>setDateInput(e.target.value)} />
             </label>
             <label>
             Hora
             <div className="time-range">
                 <span className="time-label">Desde las</span>
-                <input type="time" step="1" value={toTimeInputSeconds(nowCR)} readOnly />
+                <input type="time" step="1" value={timeFrom} onChange={(e)=>setTimeFrom(e.target.value)} />
                 <span className="time-label">Hasta las</span>
-                <input type="time" step="1" value={toTimeInputSeconds(nowCR)} readOnly />
+                <input type="time" step="1" value={timeTo} onChange={(e)=>setTimeTo(e.target.value)} />
             </div>
             </label>
             <label>
@@ -150,7 +156,7 @@ export default function PermissionForm() {
             </label>
             <label>
             Hora de salida del centro educativo
-            <input type="time" step="1" value={toTimeInputSeconds(nowCR)} readOnly />
+            <input type="time" step="1" value={timeExit} onChange={(e)=>setTimeExit(e.target.value)} />
             </label>
         </div>
         <div className="form-section">
