@@ -71,14 +71,20 @@ body {
     font-weight: 700;
     color: #000;
 }
+#applicant-info input[type="text"], #permission-info select {
+    width: 15%;
+}
+
+#permission-info {
+    padding: 3% 0 .5% 0;
+}
 
 .permission-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
 }
 
-.form-row {
+.row {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
@@ -96,22 +102,30 @@ body {
     align-content: center;
     gap: 0.5rem;
     width: 100%;
-    color: #5C5C5C;
+    color: #791524;
+}
+.time-inputs {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
 }
 
 input[type="text"], select {
-    width: 15%;
+    width: 100%;
     padding: 0.5rem 0.8rem;
     border: 1px solid #d1d5db;
     border-radius: 0.4rem;
     font-size: 1rem;
-    margin-top: 0.3rem;
     box-sizing: border-box;
     background: #faf9fa;
     color: #8b8b8b;
+    align-self: center;
 }
 textarea {
-    width: 30%;
+    font-family: 'Nunito Sans', sans-serif;
+    color: #791524;
+    width: 100%;
     padding: 0.5rem 0.8rem;
     border: 1px solid #d1d5db;
     border-radius: 0.4rem;
@@ -119,6 +133,9 @@ textarea {
     margin-top: 0.3rem;
     box-sizing: border-box;
     background: #faf9fa;
+    min-height: 160px; /* Aumenta la altura mínima */
+    height: 160px;     /* Opcional: fija la altura inicial */
+    resize: vertical;
 }
 input[type="number"],
 input[type="date"],
@@ -138,8 +155,6 @@ input[type="time"]{
     display: flex;
     width: 100%;
     border-top: 1px solid #e5e7eb;
-    padding-top: 1.5rem;
-    margin-top: 1.5rem;
 }
 
 textarea {
@@ -154,7 +169,7 @@ fieldset {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0rem;
 }
 
 legend {
@@ -167,6 +182,41 @@ legend {
     display: flex;
     flex-direction: column;
 }
+
+.radio-group input[type="text"] {
+    width: 50%;
+}
+
+.radio-group select {
+    width: 15%;
+}
+
+/* Agrupa ambos en un contenedor */
+.hours-observations-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Sin espacio vertical */
+}
+
+/* Aplica el mismo borde a ambos */
+#hours-section,
+#observations-section {
+    border-left: 2px solid #e5e7eb;
+    padding-left: 1.5rem;
+    margin-top: 0; /* Elimina margen superior */
+    margin-bottom: 0; /* Elimina margen inferior */
+}
+#observations-section {
+    width: 40%;
+    /* Si está dentro de un grupo, asegúrate que el grupo también tenga width: 100% */
+    max-width: none; /* Elimina cualquier restricción de ancho */
+    box-sizing: border-box;
+}
+
+#observations-section ::placeholder{
+    color: #791524;
+}
+
 
 .submit-button {
     background: #791524;
@@ -182,6 +232,16 @@ legend {
 
 .submit-button:hover {
     background: #5e111d;
+}
+.form-end, .form-end span{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.form-end input[type="text"] {
+    width: 10%;
+    align-items: start;
 }
 
 @media (max-width: 900px) {
