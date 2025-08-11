@@ -1,6 +1,59 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Red+Rose:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Red+Rose:wght@300..700&display=swap');
+/* ================= FUNCIONARIO CUSTOM STYLES ================= */
+/* Fondo geométrico invertido */
+.funcionario .diagonal-left-funcionario {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(45deg, #8b1538 0%, #a91b47 100%);
+    transform: skewX(-15deg);
+    transform-origin: top left;
+}
+.funcionario .diagonal-right-funcionario {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(45deg, #2c4b8b 0%, #3d5aa0 100%);
+    transform: skewX(15deg);
+    transform-origin: top right;
+}
+
+/* Botón activo en funcionario: rojo */
+.funcionario .role-btn.active {
+    background: #8b1538;
+    color: white;
+}
+
+/* Botón logout en funcionario: rojo */
+.funcionario .logout-btn {
+    background: #8b1538;
+    color: white;
+}
+.funcionario .logout-btn:hover {
+    background: #a91b47;
+}
+
+/* Nombre en funcionario: rojo */
+.funcionario .user-name {
+    color: #8b1538;
+}
+
+/* Hover de cartas en funcionario: rojo */
+.funcionario .action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border-color: #8b1538;
+}
+
+/* Icono de carta en funcionario: rojo */
+.funcionario .card-icon {
+    color: #8b1538;
+}
 * {
     margin: 0;
     padding: 0;

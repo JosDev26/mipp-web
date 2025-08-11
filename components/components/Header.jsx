@@ -21,9 +21,9 @@ export default function Header({ activePage: initialPage = "administrador" }) {
   const handleRoleChange = (role) => {
     setActivePage(role);
     if (role === "administrador") {
-      router.push("/admin"); // Cambia esta ruta si tu dashboard de admin es diferente
+      router.push("/home"); // Ahora navega a /home
     } else {
-      router.push("/funcionario"); // Cambia esta ruta por la de funcionario real
+      router.push("/funcionario");
     }
   };
 
@@ -85,14 +85,12 @@ export default function Header({ activePage: initialPage = "administrador" }) {
         <div className="role-toggles">
           <button
             className={`role-btn ${activePage === "administrador" ? "active" : ""}`}
-            style={activePage === "administrador" ? { background: "#1a237e", color: "#fff", border: "2px solid #1a237e" } : {}}
             onClick={() => handleRoleChange("administrador")}
           >
             Administrador
           </button>
           <button
             className={`role-btn ${activePage === "funcionario" ? "active" : ""}`}
-            style={activePage === "funcionario" ? { background: "#b71c1c", color: "#fff", border: "2px solid #b71c1c" } : {}}
             onClick={() => handleRoleChange("funcionario")}
           >
             Funcionario
