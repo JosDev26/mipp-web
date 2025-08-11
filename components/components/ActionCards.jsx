@@ -1,12 +1,18 @@
-import "../../styles/admin.css"
+"use client";
 
-    export default function ActionCards() {
+import { useRouter } from "next/navigation";
+import "../../styles/admin.css";
+
+export default function ActionCards() {
+    const router = useRouter();
+
     const cards = [
         {
         id: 1,
         icon: "📄",
         title: "Ver Permisos de Salida,",
         subtitle: "Ausencia, Tardía o Incapacidad",
+        onClick: () => router.push("/permissionform"),
         },
         {
         id: 2,
@@ -26,13 +32,18 @@ import "../../styles/admin.css"
         title: "Administración de Personal",
         subtitle: "",
         },
-    ]
+    ];
 
     return (
         <section className="action-cards">
         <div className="cards-grid">
             {cards.map((card) => (
-            <div key={card.id} className="action-card">
+            <div
+                key={card.id}
+                className="action-card"
+                onClick={card.onClick}
+                style={{ cursor: card.onClick ? "pointer" : "default" }}
+            >
                 <div className="card-icon">{card.icon}</div>
                 <div className="card-content">
                 <h3 className="card-title">{card.title}</h3>
@@ -42,5 +53,5 @@ import "../../styles/admin.css"
             ))}
         </div>
         </section>
-    )
-    }
+    );
+}

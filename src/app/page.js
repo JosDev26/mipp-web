@@ -38,6 +38,7 @@ export default function Page() {
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userName", result.user?.user_fname || "");
           localStorage.setItem("userLastName", result.user?.user_flname || "");
+          localStorage.setItem("userId", String(result.user?.user_id ?? ""));
           window.location.href = "/home";
         }
       } else {
