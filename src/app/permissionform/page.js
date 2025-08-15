@@ -209,17 +209,14 @@ export default function PermissionForm() {
             </div>
         </div>
         <div className="form-end">
-            <div className="form-row">
-                <span>
-                Presento la solicitud a las <input type="text" value="3:38" readOnly /> del mes
-                <input type="text" value="Abril" readOnly /> del año 2025 en Heredia, Mercedes Norte.
-                </span>
-            </div>
-            <div className="form-row" style={{ textAlign: "right" }}>
-                <button type="submit" className="submit-button">
-                Enviar solicitud
-                </button>
-            </div>
+            <p className="submission-line">
+                Presento la solicitud a las{" "}
+                <input className="inline-input" type="text" value="3:38" readOnly />{" "}
+                del mes{" "}
+                <input className="inline-input" type="text" value="Abril" readOnly />{" "}
+                del año 2025 en Heredia, Mercedes Norte.
+            </p>
+            <button type="submit" className="submit-button">Enviar solicitud</button>
         </div>
         </form>
     </div>
