@@ -87,16 +87,38 @@ body {
 .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: flex-start;
+    gap: 1.2rem 2rem; /* vertical y horizontal */
+    align-items: flex-end;
+    width: 100%;
 }
 
 .form-row label,
 .form-row span {
-    flex: 1 1 2.5vw;
-    min-width: 10px;
+    flex: 1 1 320px;
+    min-width: 180px;
+    max-width: 340px;
     font-size: 1rem;
+    margin-bottom: 1rem;
 }
+
+.date-range-group {
+    display: flex;
+    gap: 1.2rem;
+    width: 100%;
+}
+.date-range-group label {
+    flex: 1 1 180px;
+    min-width: 150px;
+    max-width: 220px;
+}
+
+input.filled,
+select.filled,
+textarea.filled {
+    background-color: #ffffff !important;
+    color: #440c15 !important;
+}
+
 #date-time-section {
     display: flex;
     align-content: center;
@@ -119,7 +141,7 @@ input[type="text"], select {
     font-size: 1rem;
     box-sizing: border-box;
     background: #faf9fa;
-    color: #8b8b8b;
+    color: #5b5b5b;
     align-self: center;
 }
 textarea {
@@ -140,6 +162,7 @@ textarea {
 input[type="number"],
 input[type="date"],
 input[type="time"]{
+    font-family: 'Nanito Sans', sans-serif;
     width: 100%;
     padding: 0.5rem 0.8rem;
     border: 1px solid #d1d5db;
@@ -148,13 +171,15 @@ input[type="time"]{
     margin-top: 0.3rem;
     box-sizing: border-box;
     background: #faf9fa;
-    color: #8B8B8B;
+    color: #5b5b5b;
 }
 
 .form-section {
     display: flex;
     width: 100%;
     border-top: 1px solid #e5e7eb;
+    gap: 2rem; /* Espacio entre Motivo y Observaciones */
+    margin-top: 1.5rem;
 }
 
 textarea {
@@ -181,14 +206,21 @@ legend {
 .radio-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    gap: 0.3rem;
 }
 
 .radio-group input[type="text"] {
-    width: 50%;
+    width: 40%;
 }
 
 .radio-group select {
-    width: 15%;
+    width: 20%;
+}
+
+.radio-group label {
+    max-inline-size: 100%;
+    max-height: min-content;
 }
 
 /* Agrupa ambos en un contenedor */
@@ -206,11 +238,20 @@ legend {
     margin-top: 0; /* Elimina margen superior */
     margin-bottom: 0; /* Elimina margen inferior */
 }
+
+fieldset.form-row,
 #observations-section {
-    width: 40%;
-    /* Si está dentro de un grupo, asegúrate que el grupo también tenga width: 100% */
-    max-width: none; /* Elimina cualquier restricción de ancho */
+    flex: 1 1 0;
+    min-width: 0px;
+    max-width: 100%;
+    margin: 0;
     box-sizing: border-box;
+}
+
+#observations-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 #observations-section ::placeholder{
@@ -233,15 +274,27 @@ legend {
 .submit-button:hover {
     background: #5e111d;
 }
-.form-end, .form-end span{
+
+.form-end {
     display: flex;
     flex-direction: row;
+    align-items: end;
+    width: 100%;
+    justify-content: flex-end;
     gap: 1rem;
     margin-top: 1.5rem;
 }
+
+.form-end span {
+    flex: 1;
+    text-align: right; /* <-- Esto alinea el texto a la derecha */
+    display: inline-block;    /* <-- Cambia a block para que text-align funcione bien */
+    margin-top: 0;
+    gap: 1rem;
+}
 .form-end input[type="text"] {
-    width: 10%;
-    align-items: start;
+    width: auto;
+    min-width: 60px;
 }
 
 @media (max-width: 900px) {
