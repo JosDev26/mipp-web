@@ -86,7 +86,7 @@ export default function page() {
                 Iniciar sesión
               </button>
               <div style={{ marginTop: "1rem", textAlign: "center" }}>
-                <a href="/justificationform" style={{ color: "#791524", textDecoration: "underline" }}>
+                <a href="/reportform" style={{ color: "#791524", textDecoration: "underline" }}>
                   Ir al formulario de permisos (prueba)
                 </a>
               </div>
