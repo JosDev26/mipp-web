@@ -10,7 +10,7 @@ body {
     "YTLC" 500;
 }
 
-.permission-form-container {
+.justification-form-container {
     max-width: 95%;
     margin: 2rem auto;
     padding: 2rem;
@@ -19,7 +19,7 @@ body {
     box-shadow: 0 2px 16px rgba(0,0,0,0.07);
 }
 
-.permission-header {
+.justification-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,11 +75,11 @@ body {
     width: 15%;
 }
 
-#permission-info {
+#justification-info {
     padding: 3% 0 .5% 0;
 }
 
-.permission-form {
+.justification-form {
     display: flex;
     flex-direction: column;
 }
@@ -90,6 +90,26 @@ body {
     gap: 1.2rem 2rem; /* vertical y horizontal */
     align-items: flex-end;
     width: 100%;
+}
+
+#justification-info select{
+    width: 15%;
+}
+
+.attach-button{
+    background: #791524;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2.5rem;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.attach-button:hover {
+    background: #5e111d;
 }
 
 .form-row label,
@@ -224,14 +244,14 @@ legend {
 }
 
 /* Agrupa ambos en un contenedor */
-.hours-observations-group {
+.note-observations-group {
     display: flex;
     flex-direction: column;
     gap: 0; /* Sin espacio vertical */
 }
 
 /* Aplica el mismo borde a ambos */
-#hours-section,
+#note-section,
 #observations-section {
     border-left: 2px solid #e5e7eb;
     padding-left: 1.5rem;
@@ -306,7 +326,7 @@ fieldset.form-row,
 }
 
 @media (max-width: 900px) {
-    .permission-form-container {
+    .justification-form-container {
         padding: 1rem;
         max-width: 100%;
     }
@@ -314,33 +334,30 @@ fieldset.form-row,
     .row,
     .time-inputs,
     .form-section,
-    .hours-observations-group {
+    .note-observations-group {
         flex-direction: column !important;
         gap: 0.7rem !important;
         width: 100% !important;
     }
     #observations-section,
-    #hours-section {
+    #note-section {
         width: 100% !important;
         padding-left: 0.7rem !important;
+        border-left: 0 !important;
     }
     .form-title {
         font-size: 1.2rem;
         padding: 1rem;
     }
-    .form-end { /* stack text and button on small screens */
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .submission-line {
-        text-align: left;
-    }
     .form-end, .form-end span {
+        flex-direction: column !important;
         gap: 0.7rem !important;
         margin-top: 1rem;
+        align-items: stretch !important;
+        text-align: left !important;
     }
-    .form-end input[type="text"], .inline-input {
-        width: auto !important;
+    .form-end input[type="text"] {
+        width: 100% !important;
     }
     input[type="text"], select, textarea, input[type="number"], input[type="date"], input[type="time"] {
         font-size: 1rem;
@@ -353,5 +370,11 @@ fieldset.form-row,
     }
     .logos {
         gap: 1rem;
+    }
+    fieldset.form-row,
+    #observations-section {
+        min-width: 0 !important;
+        max-width: 100% !important;
+        margin: 0 !important;
     }
 }

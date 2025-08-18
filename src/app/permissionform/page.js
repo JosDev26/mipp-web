@@ -1,96 +1,37 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
+import React, {useState} from "react";
 import sheet from "../permissionform/permission.css";
-import { supabase } from "../supabaseClient"; // Ajuste de ruta para resolver el módulo correctamente
-import Image from "next/image";
-import { ChevronLeft } from "lucide-react";
 
 export default function PermissionForm() {
-    const [userData, setUserData] = useState({
-        name: "",
-        id: "",
-        position: "",
-    });
-    const [userError, setUserError] = useState("");
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    const minDate = today.toISOString().split("T")[0];
 
-    const [now, setNow] = useState(new Date());
+    const maxDateObj = new Date(today);
+    maxDateObj.setFullYear(today.getFullYear() + 1);
+    const maxDate = maxDateObj.toISOString().split("T")[0];
 
-    useEffect(() => {
-        const timer = setInterval(() => setNow(new Date()), 1000);
-        return () => clearInterval(timer);
-    }, []);
+    const [fecha, setFecha] = useState("");
+    const [horaDesde, setHoraDesde] = useState("");
+    const [horaHasta, setHoraHasta] = useState("");
+    const [jornada, setJornada] = useState("");
+    const [cantidadHoras, setCantidadHoras] = useState("");
+    const [horaSalida, setHoraSalida] = useState("");
+    const [motivo, setMotivo] = useState("");
+    const [motivoExtra, setMotivoExtra] = useState("");
+    const [observaciones, setObservaciones] = useState("");
 
-    // Fecha/hora en vivo para Costa Rica
-    const getNowCR = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Costa_Rica' }));
-    const [nowCR, setNowCR] = useState(getNowCR());
+    const [variosDias, setVariosDias] = useState(false);
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFin, setFechaFin] = useState("");
 
-    useEffect(() => {
-        const timer = setInterval(() => setNowCR(getNowCR()), 1000);
-        return () => clearInterval(timer);
-    }, []);
-
-    // Helpers para inputs HTML y textos (mes en español con mayúscula inicial)
-    const toDateInput = (d) => {
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    };
-    const toTimeInput = (d) => {
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    };
-    const toTimeInputSeconds = (d) => {
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-    };
-    const monthName = (d) => {
-        const s = new Intl.DateTimeFormat('es-CR', { month: 'long', timeZone: 'America/Costa_Rica' }).format(d);
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    };
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userIdStr = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
-                if (!userIdStr) {
-                    setUserError("No hay sesión activa. Por favor, inicie sesión para autocompletar sus datos.");
-                    return;
-                }
-                // Usar el userId como string para máxima compatibilidad
-                const { data, error } = await supabase
-                    .from("users")
-                    .select("user_fname, user_sname, user_flname, user_slname, user_id, user_position")
-                    .eq("user_id", userIdStr)
-                    .single();
-                if (error) throw error;
-                if (data) {
-                    const fullName = [data.user_fname, data.user_sname, data.user_flname, data.user_slname]
-                        .filter(Boolean)
-                        .join(" ");
-                    setUserData({
-                        name: fullName,
-                        id: data.user_id || "",
-                        position: data.user_position || "",
-                    });
-                }
-            } catch (err) {
-                setUserError("Error al cargar los datos del usuario: " + (err.message || err));
-            }
-        };
-        fetchUserData();
-    }, []);
-
-        return (
-        <div className="permission-form-container">
-            {userError && (
-                <div style={{ background: '#ffeaea', color: '#a00', padding: 12, borderRadius: 6, marginBottom: 16, textAlign: 'center', fontWeight: 600 }}>
-                    {userError}
-                </div>
-            )}
+    return (
+    <div className="permission-form-container">
         <header className="permission-header">
-        <button className="back-button" onClick={() => history.back()}><ChevronLeft size={18}/> Volver</button>
+        <button className="back-button">&lt; Volver</button>
         <div className="logos">
-            <Image src="/logo-mipp.png" alt="MIPP+" className="logo-mipp" width={120} height={40} />
-            <Image src="/logo-mep.png" alt="MEP" className="logo-mep" width={160} height={40} />
+            <img src="/logo-mipp.png" alt="MIPP+" className="logo-mipp" />
+            <img src="/logo-mep.png" alt="MEP" className="logo-mep" />
         </div>
         </header>
         <h1 className="form-title">
@@ -100,19 +41,19 @@ export default function PermissionForm() {
         <span>Importante:</span> Todo permiso de ausencia laboral está sujeto a cumplimiento de requisitos y copia adjunta de documento pertinente de cita, convocatoria o licencia, de ser posible con tres días de anticipación. Posterior a la ausencia y/o tardía, el funcionario debe de hacer entrega del comprobante pertinente de justificación de asistencia en el plazo no mayor de 48 (cuarenta y ocho) horas. Las licencias dependen de requisitos previos para su goce. De no presentar el comprobante se tramitará lo que corresponda.
         </p>
         <form className="permission-form">
-        <div className="form-row">
+        <div className="form-row" id="applicant-info">
             <span>
-            Quien se suscribe <input type="text" value={userData.name} readOnly />
-            con cédula de identidad <input type="text" value={userData.id} readOnly />
-            quien labora en la institución educativa <input type="text" value="CTP Mercedes Norte" readOnly />
-            en condición de <input type="text" value={userData.position} readOnly />
+            Quien se suscribe <input type="text" value="Josué Gutiérrez Herrera" readOnly />,
+            con cédula de identidad <input type="text" value="402760529" readOnly />,
+            quien labora en la institución educativa <input type="text" value="CTP Mercedes Norte" readOnly />,
+            en el puesto de <input type="text" value="Auxiliar Administrativo" readOnly />,
             solicita:
             </span>
         </div>
-        <div className="form-row">
-            <label className="permiso-label">
+        <div className="form-row" id="permission-info">
+            <label>
             Permiso de:
-            <select className="permiso-select">
+            <select>
                 <option>Ausencia</option>
                 <option>Salida</option>
                 <option>Tardía</option>
@@ -121,81 +62,161 @@ export default function PermissionForm() {
             </label>
         </div>
         <div className="form-row" id="date-time-section">
-            <label>
-            Fecha
-            <input type="date" value={toDateInput(nowCR)} readOnly />
-            </label>
-            <label>
-            Hora
-            <div className="time-range">
-                <span className="time-label">Desde las</span>
-                <input type="time" step="1" value={toTimeInputSeconds(nowCR)} readOnly />
-                <span className="time-label">Hasta las</span>
-                <input type="time" step="1" value={toTimeInputSeconds(nowCR)} readOnly />
+            <div className="row">
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={variosDias}
+                        onChange={e => setVariosDias(e.target.checked)}
+                        style={{ marginRight: "0.5rem" }}
+                    />
+                    ¿Es una ausencia de varios días?
+                </label>
+                {!variosDias ? (
+                    <label>
+                        Fecha
+                        <input
+                            type="date"
+                            min={minDate}
+                            max={maxDate}
+                            placeholder="Seleccione una fecha"
+                            onChange={e => setFecha(e.target.value)}
+                            className={fecha ? "filled" : ""}
+                            value={fecha}
+                        />
+                    </label>
+                ) : (
+                    <>
+                    <div className="date-range-group">
+                        <label>
+                            Fecha inicio
+                            <input
+                                type="date"
+                                min={minDate}
+                                max={maxDate}
+                                placeholder="Desde"
+                                onChange={e => setFechaInicio(e.target.value)}
+                                className={fechaInicio ? "filled" : ""}
+                                value={fechaInicio}
+                            />
+                        </label>
+                        <label>
+                            Fecha fin
+                            <input
+                                type="date"
+                                min={fechaInicio || minDate}
+                                max={maxDate}
+                                placeholder="Hasta"
+                                onChange={e => setFechaFin(e.target.value)}
+                                className={fechaFin ? "filled" : ""}
+                                value={fechaFin}
+                                disabled={!fechaInicio}
+                            />
+                        </label>
+                    </div>
+                    </>
+                )}
             </div>
-            </label>
-            <label>
-            Tipo de jornada
-            <select>
-                <option>Jornada Laboral Completa</option>
-                <option>Media Jornada</option>
-            </select>
-            </label>
-            <label>
-            Cantidad de lecciones
-            <input type="number" min="0" />
-            </label>
-            <label>
-            Cantidad de horas
-            <input type="number" min="0" />
-            </label>
-            <label>
-            Hora de salida del centro educativo
-            <input type="time" step="1" value={toTimeInputSeconds(nowCR)} readOnly />
-            </label>
+            <div className="row">
+                <label>
+                Hora (desde las - hasta las)
+                <div className="time-inputs">
+                    <input type="time" placeholder="Desde las" value={horaDesde}
+                                onChange={e => setHoraDesde(e.target.value)}
+                                className={horaDesde ? "filled" : ""} />
+                    <input type="time" placeholder="Hasta las" value={horaHasta}
+                                onChange={e => setHoraHasta(e.target.value)}
+                                className={horaHasta ? "filled" : ""} />
+                </div>
+                </label>
+                <label>
+                Tipo de jornada
+                <select value={jornada} placeholder="Seleccione"
+                            onChange={e => setJornada(e.target.value)}
+                            className={jornada ? "filled" : ""}>
+                    <option value="">Seleccione</option>
+                    <option>Jornada Laboral Completa</option>
+                    <option>Media Jornada</option>
+                </select>
+                </label>
+            </div>
+            <div className="row" id="hours-section">
+                <label>
+                Cantidad de horas
+                <input type="number"
+                            min="0"
+                            placeholder="Cantidad de horas"
+                            value={cantidadHoras}
+                            onChange={e => setCantidadHoras(e.target.value)}
+                            className={cantidadHoras ? "filled" : ""} />
+                </label>
+                <label>
+                Hora de salida del centro educativo
+                <input type="time" placeholder="Hora de salida del colegio" value={horaSalida}
+                            onChange={e => setHoraSalida(e.target.value)}
+                            className={horaSalida ? "filled" : ""}/>
+                </label>
+            </div>
         </div>
         <div className="form-section">
             <fieldset className="form-row">
                 <legend>Motivo</legend>
                 <div className="radio-group">
                     <label>
-                    <input type="radio" name="motivo" /> Cita médica personal
+                    <input type="radio" name="motivo" value="Cita médica personal"
+                                checked={motivo === "Cita médica personal"}
+                                onChange={e => setMotivo(e.target.value)} /> Cita médica personal
                     </label>
                     <label>
-                    <input type="radio" name="motivo" /> Acompañar a cita médica a padre, madre, hijos menores de edad o discapacitados, esposo o cónyuge.
+                    <input type="radio" name="motivo" value="Acompañar"
+                                checked={motivo === "Acompañar"}
+                                onChange={e => setMotivo(e.target.value)} /> Acompañar a cita médica a padre, madre, hijos menores de edad o discapacitados, esposo o cónyuge.
                     </label>
                     <label>
-                    <input type="radio" name="motivo" /> Asistencia a Convocatoria:
-                    <select>
+                    <input type="radio" name="motivo" value="Convocatoria"
+                                checked={motivo === "Convocatoria"}
+                                onChange={e => setMotivo(e.target.value)} /> Asistencia a Convocatoria:
+                    <select value={motivoExtra}
+                                onChange={e => setMotivoExtra(e.target.value)}
+                                className={motivo === "Convocatoria" && motivoExtra ? "filled" : ""}
+                                disabled={motivo !== "Convocatoria"}>
+                        <option value="">Seleccione</option>
                         <option>Sindical</option>
                         <option>Otra</option>
                     </select>
                     </label>
                     <label>
-                    <input type="radio" name="motivo" /> Atención de asuntos personales:
-                    <input type="text" placeholder="Especifique" />
+                    <input type="radio" name="motivo" value="Asuntos personales"
+                                checked={motivo === "Asuntos personales"}
+                                onChange={e => setMotivo(e.target.value)} /> Atención de asuntos personales:
+                    <input type="text" placeholder="Especifique" value={motivoExtra}
+                                onChange={e => setMotivoExtra(e.target.value)}
+                                className={motivo === "Asuntos personales" && motivoExtra ? "filled" : ""}
+                                disabled={motivo !== "Asuntos personales"} />
                     </label>
                 </div>
             </fieldset>
-            <div className="form-row">
+            <div className="form-row" id="observations-section">
                 <label>
-                Observaciones:
-                <textarea rows="5" />
+                <textarea placeholder="Observaciones:" value={observaciones}
+                    onChange={e => setObservaciones(e.target.value)}
+                    className={observaciones ? "filled" : ""}></textarea>
                 </label>
             </div>
+            <div className="hours-observations-group">
+                <div id="hours-section">{/* ... */}</div>
+                <div id="observations-section">{/* ... */}</div>
+            </div>
         </div>
-        <div className="form-section">
-            <div className="form-row">
-                <span>
-                Presento la solicitud a las <input type="text" value={toTimeInputSeconds(nowCR)} readOnly /> del mes
-                <input type="text" value={monthName(nowCR)} readOnly /> del año {nowCR.getFullYear()} en Heredia, Mercedes Norte.
-                </span>
-            </div>
-            <div className="form-row" style={{ textAlign: "right" }}>
-                <button type="submit" className="submit-button">
-                Enviar solicitud
-                </button>
-            </div>
+        <div className="form-end">
+            <p className="submission-line">
+                Presento la solicitud a las{" "}
+                <input className="inline-input" type="text" value="3:38" readOnly />{" "}
+                del mes{" "}
+                <input className="inline-input" type="text" value="Abril" readOnly />{" "}
+                del año 2025 en Heredia, Mercedes Norte.
+            </p>
+            <button type="submit" className="submit-button">Enviar solicitud</button>
         </div>
         </form>
     </div>
