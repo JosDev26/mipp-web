@@ -1,7 +1,13 @@
-import React from "react";
+"use client";
+import React, {useState} from "react";
 import "./reportform.css"
 
 export default function ReportForm() {
+
+    const [reporte, setReporte] = useState("");
+    const [lugar, setLugar] = useState("");
+    const [tipo, setTipo] = useState("");
+
     return (
     <div className="report-form-container">
         <header>
@@ -26,18 +32,25 @@ export default function ReportForm() {
         </div>
         <div className="report-type">
             <div>
-            <textarea className="report-textarea"
+            <textarea className={reporte ? "report-textarea filled" : "report-textarea"}
                 placeholder="Reporte:"
+                value={reporte}
+                onChange={e => setReporte(e.target.value)}
             />
             </div>
             <div>
             <textarea
+                className={lugar ? "filled" : ""}
                 placeholder="Lugar: (Sea Específico)"
+                value={lugar}
+                onChange={e => setLugar(e.target.value)}
             />
             <div>
                 Tipo de reporte:{" "}
-                <select>
-                <option>Seleccione una opción</option>
+                <select className={tipo ? "filled" : ""}
+                    value={tipo}
+                    onChange={e => setTipo(e.target.value)}>
+                <option value="">Seleccione una opción</option>
                 <option>Infraestructura</option>
                 <option>Equipo</option>
                 <option>Material didáctico</option>

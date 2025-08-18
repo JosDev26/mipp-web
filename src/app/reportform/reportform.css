@@ -163,6 +163,10 @@ form > div:last-of-type span {
     font-size: 1rem;
 }
 
+.filled {
+    color: #000 !important;
+}
+
 button[type="submit"] {
     background: #791524;
     color: #fff;
