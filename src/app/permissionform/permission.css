@@ -116,7 +116,7 @@ input.filled,
 select.filled,
 textarea.filled {
     background-color: #ffffff !important;
-    color: #440c15 !important;
+    color: #000000 !important;
 }
 
 #date-time-section {

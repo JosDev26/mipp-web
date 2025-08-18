@@ -120,6 +120,7 @@ form textarea {
     margin-bottom: 0.5rem;
     color: #791524;
     resize: vertical;
+    font-family: 'Nunito Sans', sans-serif;
 }
 
 form textarea::placeholder {

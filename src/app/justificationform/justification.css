@@ -85,15 +85,46 @@ body {
 .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: flex-start;
+    gap: 1.2rem 2rem; /* vertical y horizontal */
+    align-items: stretch;
+    width: 100%;
+}
+
+.form-row,
+.row {
+    margin-top: 1.2rem;
+}
+
+.form-row:first-of-type,
+.row:first-of-type {
+    margin-top: 1.5rem;
 }
 
 .form-row label,
 .form-row span {
-    flex: 1 1 2.5vw;
-    min-width: 10px;
+    flex: 1 1 320px;
+    min-width: 180px;
+    max-width: 340px;
     font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.date-range-group {
+    display: flex;
+    gap: 1.2rem;
+    width: 100%;
+}
+.date-range-group label {
+    flex: 1 1 180px;
+    min-width: 150px;
+    max-width: 220px;
+}
+
+input.filled,
+select.filled,
+textarea.filled {
+    background-color: #ffffff !important;
+    color: #000000 !important;
 }
 
 #date-time-section {
@@ -118,7 +149,7 @@ input[type="text"], select {
     font-size: 1rem;
     box-sizing: border-box;
     background: #faf9fa;
-    color: #8b8b8b;
+    color: #5b5b5b;
     align-self: center;
 }
 textarea {
@@ -139,6 +170,7 @@ textarea {
 input[type="number"],
 input[type="date"],
 input[type="time"]{
+    font-family: 'Nunito Sans', sans-serif; /* fix typo */
     width: 100%;
     padding: 0.5rem 0.8rem;
     border: 1px solid #d1d5db;
@@ -147,13 +179,15 @@ input[type="time"]{
     margin-top: 0.3rem;
     box-sizing: border-box;
     background: #faf9fa;
-    color: #8B8B8B;
+    color: #5b5b5b;
 }
 
 .form-section {
     display: flex;
     width: 100%;
     border-top: 1px solid #e5e7eb;
+    gap: 2rem; /* Espacio entre Motivo y Observaciones */
+    margin-top: 1.5rem;
 }
 
 textarea {
@@ -177,9 +211,36 @@ legend {
     margin-bottom: 0.5rem;
 }
 
+#note-section {
+    border-left: none;      /* Quita el borde izquierdo */
+    padding-left: 0;        /* Quita el padding izquierdo */
+    height: min-content;
+}
+
+.radio-groupmini{
+    display: flex;
+    flex-direction: column;
+}
+
+
 .radio-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    gap: 0.3rem;
+}
+
+.radio-group input[type="text"] {
+    width: 40%;
+}
+
+.radio-group select {
+    width: 20%;
+}
+
+.radio-group label {
+    max-inline-size: 100%;
+    max-height: min-content;
 }
 
 .radio-groupmini {
@@ -214,6 +275,11 @@ legend {
     width: 15%;
 }
 
+.radio-group label {
+    max-inline-size: 100%;
+    max-height: min-content;
+}
+
 #observations-section {
     width: 40%;
     /* Si está dentro de un grupo, asegúrate que el grupo también tenga width: 100% */
@@ -229,6 +295,63 @@ legend {
     color: #791524;
 }
 
+/* Agrupa ambos en un contenedor */
+.note-observations-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Sin espacio vertical */
+}
+
+/* Aplica el mismo borde a ambos */
+#note-section,
+#observations-section {
+    border-left: 2px solid #e5e7eb;
+    padding-left: 1.5rem;
+    margin-top: 0; /* Elimina margen superior */
+    margin-bottom: 0; /* Elimina margen inferior */
+}
+
+fieldset.form-row,
+#observations-section {
+    flex: 1 1 0;
+    min-width: 0px;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#observations-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#observations-section ::placeholder{
+    color: #791524;
+}
+
+.form-end {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* texto a la izquierda, botón a la derecha */
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.submission-line {
+    margin: 0;
+    color: #333;
+}
+
+.inline-input {
+    display: inline-block;
+    width: auto;            /* que no se estiren */
+    min-width: 60px;
+    padding: 0.3rem 0.5rem;
+    margin: 0 0.25rem;
+    vertical-align: middle;
+}
 
 .submit-button {
     background: #791524;
@@ -245,15 +368,12 @@ legend {
 .submit-button:hover {
     background: #5e111d;
 }
-.form-end, .form-end span{
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    margin-top: 1.5rem;
+
+.form-end span {
+    text-align: left;
 }
 .form-end input[type="text"] {
-    width: 10%;
-    align-items: start;
+    width: auto; /* no stretch */
 }
 
 @media (max-width: 900px) {
