@@ -73,7 +73,7 @@ export default function JustificationForm() {
                                 onChange={e => setVariosDias(e.target.checked)}
                                 style={{ marginRight: "0.5rem" }}
                             />
-                            ¿Es una ausencia de varios días?
+                            ¿Es una justificación de varios días?
                         </label>
                         {!variosDias ? (
                             <label>
